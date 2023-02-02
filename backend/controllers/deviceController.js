@@ -7,7 +7,7 @@ class DeviceController {
     async create(req,res,next) {
         try {
             let {name, price, brandId, typeId, info} = req.body
-            console.log(info)
+
             const {img} = req.files
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
@@ -15,6 +15,7 @@ class DeviceController {
 
             if (info) {
                 info = JSON.parse(info)
+                console.log("info " + info)
                 info.forEach(i =>
                     DeviceInfo.create({
                         title: i.title,

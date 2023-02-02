@@ -1,5 +1,4 @@
 const {Sequelize} = require('sequelize')
-const {process_params} = require("express/lib/router");
 
 module.exports = new Sequelize(
     process.env.DB_NAME,

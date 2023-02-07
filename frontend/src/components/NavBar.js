@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import {Button, Container, Nav, Navbar, NavLink} from "react-bootstrap";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
@@ -12,14 +12,25 @@ const NavBar = observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        localStorage.removeItem('email')
     }
 
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
                 <NavLink style={{color:'white'}} to={SHOP_ROUTE}>DeviceShop</NavLink>
+
                 {user.isAuth ?
-                <Nav className="mr-auto" style={{color:'white'}}>
+
+                <Nav className="d-flex align-items-center" style={{color:'white'}}>
+
+                    <div
+                        style={{color: 'white'}}
+                        className="px-5"
+                    >
+                        Logged as: {localStorage.getItem('email')}
+                    </div>
+
                     <Button
                         variant={"outline-light"}
                         onClick={() => history(ADMIN_ROUTE)}
@@ -36,7 +47,7 @@ const NavBar = observer(() => {
                 </Nav>
                     :
                 <Nav className="mr-auto" style={{color:'white'}}>
-                    <Button 
+                    <Button
                         variant={"outline-light"}
                         onClick={() => history(LOGIN_ROUTE)}
                     >

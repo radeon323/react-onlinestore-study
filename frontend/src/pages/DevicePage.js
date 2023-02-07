@@ -1,25 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Col, Container, Row, Image, Card, Button} from "react-bootstrap";
 import bigStar from '../assets/star.png';
+import {useParams} from "react-router-dom";
+import {fetchOneDevice} from "../http/deviceAPI";
 
 const DevicePage = () => {
-    const device = {id: 1, name: 'Iphone 12 pro 1', price: 25000, rating: 5, img: `https://picsum.photos/150/150/`}
-    const description = [
-        {id:1, title: 'RAM', description: '5Gb'},
-        {id:2, title: 'Camera', description: '12Mp'},
-        {id:3, title: 'CPU', description: '2GHz'},
-        {id:4, title: 'Cores number', description: '4'},
-        {id:5, title: 'Battery', description: '4000'},
-    ]
+    const [device, setDevice] = useState({info: []})
+    const {id} = useParams()
+
+    useEffect(() => {
+        fetchOneDevice(id).then(data => setDevice(data))
+    }, [])
 
     return (
         <Container className={"mt-3"}>
             <Row>
-                <Col md={4}>
-                    <Image width={300} height={300} src={device.img} />
+                <Col md={4} className={"d-flex align-items-center justify-content-center text-center"}>
+                    <Image width={300} height={300} src={process.env.REACT_APP_API_URL + device.img} />
                 </Col>
                 <Col md={4}>
-                    <Row className={"d-flex align-items-center"}>
+                    <Row className={"d-flex align-items-center justify-content-center text-center"}>
                         <h2>{device.name}</h2>
                         <div
                             className={"d-flex align-items-center justify-content-center"}
@@ -39,9 +39,9 @@ const DevicePage = () => {
                     </Card>
                 </Col>
             </Row>
-            <Row className={"d-flex flex-column m-3"}>
+            <Row className={"d-flex flex-column m-3 px-5"}>
                 <h2>Characteristics</h2>
-                {description.map((info, index) =>
+                {device.info.map((info, index) =>
                     <Row
                         key={info.id}
                         style={{background: index % 2 === 0 ? 'lightgrey' : 'transparent', paddingBlock: 10}}

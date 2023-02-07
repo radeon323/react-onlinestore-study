@@ -5,21 +5,34 @@ import NavBar from "./components/NavBar";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userAPI";
-import {Spinner} from "react-bootstrap";
+import RotateSpinner from "./assets/spinner";
 
 const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
+
+
     useEffect(() => {
-        check().then(data => {
-            user.setUser(true)
-            user.setIsAuth(true)
-        }).finally(() => setLoading(false))
+
+        // setTimeout(() => {
+
+            check().then(data => {
+                user.setUser(true)
+                user.setIsAuth(true)
+            }).finally(() => setLoading(false))
+
+        // }, 2000)
+
+
     }, [])
 
     if (loading) {
-        return <Spinner animation={"grow"}/>
+        return (
+            <div className="position-absolute top-50 start-50">
+                <RotateSpinner/>
+            </div>
+        )
     }
 
     return (

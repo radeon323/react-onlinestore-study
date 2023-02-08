@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
-import {Card, ListGroup} from "react-bootstrap";
+import {ListGroup} from "react-bootstrap";
 import {Context} from "../index";
 
 const TypeBar = observer (() => {

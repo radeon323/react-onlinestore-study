@@ -16,8 +16,12 @@ const Pages = observer(() => {
         <Pagination className={"mt-5"}>
             {pages.map(page =>
                 <Pagination.Item
+                    style={{cursor: 'pointer',
+                        backgroundColor: 'white', color: 'black',
+                        borderColor: device.page === page ? 'red' : 'lightgray'}}
                     key={page}
                     active={device.page === page}
+                    activeLabel={'1'}
                     onClick={() => device.setPage(page)}
                 >
                     {page}

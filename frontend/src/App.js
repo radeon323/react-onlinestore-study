@@ -11,20 +11,11 @@ const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
-
-
     useEffect(() => {
-
-        // setTimeout(() => {
-
-            check().then(data => {
-                user.setUser(true)
-                user.setIsAuth(true)
-            }).finally(() => setLoading(false))
-
-        // }, 2000)
-
-
+        check().then(() => {
+            user.setUser(true)
+            user.setIsAuth(true)
+        }).finally(() => setLoading(false))
     }, [])
 
     if (loading) {
@@ -37,7 +28,7 @@ const App = observer(() => {
 
     return (
         <BrowserRouter>
-            <NavBar />
+            <NavBar/>
             <AppRouter />
         </BrowserRouter>
     );

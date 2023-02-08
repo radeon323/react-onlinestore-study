@@ -1,24 +1,32 @@
-import React from 'react';
-import {Card, Col} from "react-bootstrap";
+import React, {useContext, useState} from 'react';
+import {Button, Card, Col} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import {useNavigate} from "react-router-dom";
 import {DEVICE_ROUTE} from "../utils/consts";
+import {Context} from "../index";
 
-const DeviceItem = ({device}) => {
+const DeviceItem = ({deviceItem}) => {
     const history = useNavigate()
+    const {device} = useContext(Context)
+
+    const getBrandName = (id) => {
+        return device.brands
+            .filter(brand => brand.id === id)
+            .map(brand => brand.name)
+    }
 
     return (
-        <Col md={3} className={"mt-3"} onClick={() => history(DEVICE_ROUTE + '/' + device.id)}>
+        <Col md={3} className={"mt-3"} onClick={() => history(DEVICE_ROUTE + '/' + deviceItem.id)}>
             <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
-                <Image width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} />
+                <Image width={150} height={150} src={process.env.REACT_APP_API_URL + deviceItem.img} />
                 <div className={"d-flex justify-content-between align-items-center mt-1 text-black-50"}>
-                    <div>Samsung...</div>
+                    <div>{getBrandName(deviceItem.brandId)}</div>
                     <div className={"d-flex align-items-center"}>
-                        <div>{device.rating}</div>
+                        <div>{deviceItem.rating}</div>
                         <i className="ms-Icon ms-font-l ms-Icon--FavoriteStar text-black"></i>
                     </div>
                 </div>
-                <div>{device.name}</div>
+                <div>{deviceItem.name}</div>
             </Card>
         </Col>
     );

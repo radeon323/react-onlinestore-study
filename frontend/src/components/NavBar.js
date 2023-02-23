@@ -5,8 +5,9 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {NavLink, useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import Screenshot from "../utils/Screenshot";
 
-const NavBar = observer(() => {
+const NavBar = observer(({screenshotRef, screenshotGenerationProcess}) => {
     const {user} = useContext(Context)
     const history = useNavigate()
 
@@ -24,7 +25,7 @@ const NavBar = observer(() => {
         <Navbar bg="dark" variant="dark">
             <Container>
                 <NavLink style={{color:'white'}} to={SHOP_ROUTE}>DeviceShop</NavLink>
-
+                <Screenshot screenshotRef={screenshotRef} screenshotGenerationProcess={screenshotGenerationProcess} />
                 {user.isAuth ?
                     <div
                         style={{color: 'white'}}
@@ -67,7 +68,6 @@ const NavBar = observer(() => {
                     </Button>
                 </Nav>
                 }
-
             </Container>
         </Navbar>
     );
